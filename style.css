@@ -1,0 +1,145 @@
+:root {
+  /* ## Colors */
+
+  /* ### Neutral */
+
+  --neutral-900: 243 96% 9%;
+  --neutral-800: 243 27% 20%;
+  --neutral-700: 243 23% 24%;
+  --neutral-600: 243 23% 30%;
+  --neutral-300: 240 6% 70%;
+  --neutral-200: 250 6% 84%;
+  --neutral-0: 0 0% 100%;
+
+  /* ### Orange */
+
+  --orange-500: 28 100% 52%;
+
+  /* ### Blue */
+
+  --blue-500: 233 67% 56%;
+  --blue-700: 248 70% 36%;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url(assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url(assets/fonts/DM_Sans/DMSans-VariableFont.ttf);
+  font-weight: 300, 500, 600, 700;
+}
+@font-face {
+  font-family: "DM Sans i";
+  src: url(assets/fonts/DM_Sans/DMSans-Italic.ttf);
+}
+
+body {
+  display: grid;
+  place-content: center;
+  font-family: "DM Sans";
+  color: hsl(var(--neutral-0));
+  font-weight: 300;
+  background-color: hsl(var(--neutral-900));
+}
+.weather__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.weather__top-bar img {
+  max-width: 35vw;
+}
+.weather__hero {
+  display: grid;
+  gap: 2rem;
+  justify-content: center;
+  align-content: center;
+  background-image: url(assets/images/bg-today-small.svg);
+  background-repeat: no-repeat;
+  background-size: 90%;
+  width: 350px;
+  height: 300px;
+}
+.weather__hero-temp {
+  display: flex;
+  align-items: center;
+}
+.weather-icon img {
+  width: 80px;
+}
+.weather-temp {
+  font-size: 5rem;
+}
+
+.weather__dropdown-button {
+  display: flex;
+  position: relative;
+  color: hsl(var(--neutral-0));
+  background-color: hsl(var(--neutral-600));
+  padding: 0.1rem 1.6rem;
+  margin-right: 2rem;
+}
+.weather__dropdown-button::before {
+  position: absolute;
+  content: "";
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  background-image: url(assets/images/icon-units.svg);
+  background-repeat: no-repeat;
+  background-size: 13px;
+}
+.weather__dropdown-button::after {
+  position: absolute;
+  content: "";
+  top: 5px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  background-image: url(assets/images/icon-dropdown.svg);
+  background-repeat: no-repeat;
+  background-size: 13px;
+}
+.weather__dropdown-content {
+  position: absolute;
+  right: 0;
+  display: grid;
+  gap: 0.2rem;
+  background-color: hsl(var(--neutral-700));
+  padding: 1rem;
+  margin-top: 0.5rem;
+  min-width: 200px;
+}
+.switchImperial {
+  color: hsl(var(--neutral-0));
+  background-color: hsl(var(--neutral-700));
+  text-align: left;
+  border: 0;
+}
+div[aria-selected="true"] {
+  /*  */
+  position: relative;
+  background-color: hsl(var(--neutral-600));
+}
+div[aria-selected="true"]:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-image: url(assets/images/icon-checkmark.svg);
+  background-repeat: no-repeat;
+  background-size: 15px;
+}
+.weather__dropdown-headings {
+  color: hsl(var(--neutral-200));
+}
+.search-button {
+  margin-bottom: 2rem;
+}
+.hidden {
+  display: none;
+}

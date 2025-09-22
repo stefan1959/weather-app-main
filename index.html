@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Weather app</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <input type="text" id="city-input" placeholder="Enter city name" />
+    <button id="search-button">Search</button>
+
+    <div id="LocateCity">Location is</div>
+   
+
+    <div id="temp">Current Temp is</div> -->
+
+    <main class="container">
+      <div class="weather__top-bar">
+        <img src="/assets/images/logo.svg" alt="logo" />
+
+        <div class="weather__dropdown">
+          <button id="units" class="weather__dropdown-button">Units</button>
+          <div id="dropdown-content" class="weather__dropdown-content hidden">
+            <button id="switchImperial" class="switchImperial" value="imperial">
+              Switch to Imperial
+            </button>
+            <button id="switchMetric" class="switchMetric" value="metric">
+              Switch to Metric
+            </button>
+            <div class="weather__dropdown-headings">Temperature</div>
+            <div aria-selected="true">Celsius (°C)</div>
+            <div aria-selected="false">Fahrenheit (°F)</div>
+            <div class="weather__dropdown-headings">Wind Speed</div>
+            <div aria-selected="true">km/h</div>
+            <div aria-selected="false">mph</div>
+            <div class="weather__dropdown-headings">Precipitation</div>
+            <div aria-selected="true">Millimeters (mm)</div>
+            <div aria-selected="false">Inches (in)</div>
+          </div>
+        </div>
+      </div>
+      <h1 class="weather__dropdown-headings">How's the sky looking today?</h1>
+      <input type="text" id="city-input" placeholder="Search for a place" />
+      <button class="search-button" id="search-button">Search</button>
+      <div class="weather__hero">
+        <div class="weather__hero-location">
+          <div id="weather-location">---</div>
+          <div id="weather-date"></div>
+        </div>
+        <div class="weather__hero-temp">
+          <div class="weather-icon" id="weather-icon">
+            <img src="assets/images/icon-sunny.webp" alt="icon-sunny" />
+          </div>
+          <div class="weather-temp" id="weather-temp">--</div>
+        </div>
+      </div>
+      <div>
+        <div id="feels-like">Feels like</div>
+        <div id="temp">Current Temp is</div>
+        <!-- Insert temperature here -->
+      </div>
+      <div>
+        Humidity
+        <!-- Insert humidity here -->
+      </div>
+      Wind
+      <!-- Insert wind here -->
+      Precipitation
+      <!-- Insert precipitation here -->
+      Daily forecast
+      <!-- Insert daily forecast for the next 7 days here -->
+      Hourly forecast
+      <!-- Insert hourly forecast for the selected day here -->
+    </main>
+
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+      Coded by <a href="#">Stephen Petersen</a>.
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
