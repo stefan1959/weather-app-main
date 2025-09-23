@@ -1,7 +1,6 @@
 const enterCity = document.getElementById("city-input");
 const searchCity = document.getElementById("search-button");
 // const locCity = document.getElementById("LocateCity");
-const temp = document.getElementById("temp");
 const weathertemp = document.getElementById("weather-temp");
 const weatherloc = document.getElementById("weather-location");
 const weatherDate = document.getElementById("weather-date");
@@ -44,12 +43,11 @@ async function getGeoData() {
   let curWind = y.current.wind_speed_10m;
   let curPrecip = y.current.precipitation;
   // console.log(y);
-  feelLike.innerHTML = `Feels Like ${feelsLike}c`;
-  temp.innerHTML = `Current Temp is ${currentTemp}c`;
+  feelLike.innerHTML = `${feelsLike}c`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
-  humidity.innerHTML = `Humidity ${relHumidity}%`;
-  wind.innerHTML = `Wind ${curWind} km/h`;
-  precip.innerHTML = `Precipitation ${curPrecip} mm`;
+  humidity.innerHTML = `${relHumidity}%`;
+  wind.innerHTML = `${curWind} km/h`;
+  precip.innerHTML = `${curPrecip} mm`;
 }
 
 async function fetchResult(url) {
