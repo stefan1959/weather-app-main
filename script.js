@@ -23,7 +23,26 @@ let unitState = "metric";
 checkUnitState();
 
 async function getGeoData() {
-  const url = `https://nominatim.openstreetmap.org/search?q=${enterCity.value}&format=jsonv2&limit=1&addressdetails=1`;
+  let url = `https://nominatim.openstreetmap.org/search?q=${enterCity.value}&format=jsonv2&limit=1&addressdetails=1`;
+  let x = await fetchResult(url);
+  let lon = x[0].lon;
+  let lat = x[0].lat;
+  let city = x[0].name;
+  let state = x[0].address.state;
+  let country = x[0].address.country;
+  weatherloc.innerHTML = `${city}, ${state} ,<br> ${country}`;
+
+  url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
+  let y = await fetchResult(url);
+  let feelsLike = y.current.apparent_temperature;
+  let currentTemp = y.current.temperature_2m;
+  feelLike.innerHTML = `Feels Like ${feelsLike}c`;
+  temp.innerHTML = `Current Temp is ${currentTemp}c`;
+  weathertemp.innerHTML = `${currentTemp}&#176;`;
+  console.log(feelsLike);
+}
+
+async function fetchResult(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -31,38 +50,19 @@ async function getGeoData() {
     }
 
     const result = await response.json();
+
     console.log(result);
-    weatherloc.innerHTML = `${result[0].name}, ${result[0].address.state} <br>${result[0].address.country}`;
-    weatherDate.innerHTML = formatedDate;
-
-    // locCity.innerHTML = `Location is Logtitude ${result[0].lon} and Latitude ${result[0].lat}`;
-    getWeatherData(result[0].lat, result[0].lon);
+    return result;
   } catch (error) {
     console.error(error.message);
   }
 }
 
-async function getWeatherData(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    feelLike.innerHTML = `Feels Like ${result.current.apparent_temperature} Celcius`;
-    temp.innerHTML = `Current Temp is ${result.current.temperature_2m} Celcius`;
-    weathertemp.innerHTML = `${result.current.temperature_2m}c`;
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
+// listen for click on search button
 searchCity.addEventListener("click", (e) => {
   console.log("click");
+  //get the location data
   getGeoData();
-  console.log(enterCity.value);
 });
 
 units.addEventListener("click", () => {
