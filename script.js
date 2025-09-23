@@ -39,7 +39,6 @@ async function getGeoData() {
   feelLike.innerHTML = `Feels Like ${feelsLike}c`;
   temp.innerHTML = `Current Temp is ${currentTemp}c`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
-  console.log(feelsLike);
 }
 
 async function fetchResult(url) {
@@ -51,7 +50,7 @@ async function fetchResult(url) {
 
     const result = await response.json();
 
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (error) {
     console.error(error.message);
@@ -60,13 +59,11 @@ async function fetchResult(url) {
 
 // listen for click on search button
 searchCity.addEventListener("click", (e) => {
-  console.log("click");
   //get the location data
   getGeoData();
 });
 
 units.addEventListener("click", () => {
-  console.log("click");
   if (dropdownContent.classList.contains("hidden")) {
     dropdownContent.classList.remove("hidden");
   } else {
@@ -78,7 +75,6 @@ function checkUnitState() {
   if (unitState == "metric") {
     switchMetric.classList.add("hidden");
     switchImperial.classList.remove("hidden");
-    console.log(dropdownContent);
   } else {
     switchMetric.classList.remove("hidden");
     switchImperial.classList.add("hidden");
