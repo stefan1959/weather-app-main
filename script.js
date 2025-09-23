@@ -42,7 +42,7 @@ async function getGeoData() {
   let relHumidity = y.current.relative_humidity_2m;
   let curWind = y.current.wind_speed_10m;
   let curPrecip = y.current.precipitation;
-  console.log(y);
+  // console.log(y);
   feelLike.innerHTML = `Feels Like ${feelsLike}c`;
   temp.innerHTML = `Current Temp is ${currentTemp}c`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
