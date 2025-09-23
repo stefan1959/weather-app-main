@@ -4,11 +4,20 @@ const searchCity = document.getElementById("search-button");
 const temp = document.getElementById("temp");
 const weathertemp = document.getElementById("weather-temp");
 const weatherloc = document.getElementById("weather-location");
+const weatherDate = document.getElementById("weather-date");
 const units = document.getElementById("units");
 const dropdownContent = document.getElementById("dropdown-content");
 const feelLike = document.getElementById("feels-like");
 const switchImperial = document.getElementById("switchImperial");
 const switchMetric = document.getElementById("switchMetric");
+const now = new Date();
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+};
+const formatedDate = now.toLocaleDateString("en-US", options);
 let unitState = "metric";
 
 checkUnitState();
@@ -24,6 +33,8 @@ async function getGeoData() {
     const result = await response.json();
     console.log(result);
     weatherloc.innerHTML = `${result[0].name}, ${result[0].address.state} <br>${result[0].address.country}`;
+    weatherDate.innerHTML = formatedDate;
+
     // locCity.innerHTML = `Location is Logtitude ${result[0].lon} and Latitude ${result[0].lat}`;
     getWeatherData(result[0].lat, result[0].lon);
   } catch (error) {
