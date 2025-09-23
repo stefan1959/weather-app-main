@@ -10,6 +10,9 @@ const dropdownContent = document.getElementById("dropdown-content");
 const feelLike = document.getElementById("feels-like");
 const switchImperial = document.getElementById("switchImperial");
 const switchMetric = document.getElementById("switchMetric");
+const humidity = document.getElementById("humidity");
+const wind = document.getElementById("wind");
+const precip = document.getElementById("precipitation");
 const now = new Date();
 const options = {
   weekday: "long",
@@ -32,13 +35,20 @@ async function getGeoData() {
   let country = x[0].address.country;
   weatherloc.innerHTML = `${city}, ${state} ,<br> ${country}`;
 
-  url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
+  url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
   let y = await fetchResult(url);
   let feelsLike = y.current.apparent_temperature;
   let currentTemp = y.current.temperature_2m;
+  let relHumidity = y.current.relative_humidity_2m;
+  let curWind = y.current.wind_speed_10m;
+  let curPrecip = y.current.precipitation;
+  console.log(y);
   feelLike.innerHTML = `Feels Like ${feelsLike}c`;
   temp.innerHTML = `Current Temp is ${currentTemp}c`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
+  humidity.innerHTML = `Humidity ${relHumidity}%`;
+  wind.innerHTML = `Wind ${curWind} km/h`;
+  precip.innerHTML = `Precipitation ${curPrecip} mm`;
 }
 
 async function fetchResult(url) {
