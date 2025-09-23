@@ -34,6 +34,7 @@ async function getGeoData() {
   let state = x[0].address.state;
   let country = x[0].address.country;
   weatherloc.innerHTML = `${city}, ${state} ,<br> ${country}`;
+  weatherDate.innerHTML = formatedDate;
 
   url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
   let y = await fetchResult(url);
