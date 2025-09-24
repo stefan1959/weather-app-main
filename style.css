@@ -44,6 +44,14 @@ body {
   font-weight: 300;
   background-color: hsl(var(--neutral-900));
 }
+.container {
+  display: grid;
+  gap: 1rem;
+  padding-inline: 1rem;
+  place-items: center;
+  width: 375px;
+  /* max-width: px; */
+}
 .weather__top-bar {
   display: flex;
   align-items: center;
@@ -52,17 +60,43 @@ body {
 .weather__top-bar img {
   max-width: 35vw;
 }
+.weather__search {
+  display: grid;
+  min-width: 80%;
+  gap: 0.5rem;
+}
+.search-button {
+  color: hsl(var(--neutral-200));
+  background-color: hsl(var(--blue-500));
+  padding: 0.5rem 0.1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.weather__search input {
+  color: hsl(var(--neutral-0));
+  padding: 0.4rem 2rem;
+  background-color: hsl(var(--neutral-700));
+  background-image: url(/assets/images/icon-search.svg);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 15px;
+  border: 0;
+  border-radius: 0.4rem;
+}
+.weather__search input::placeholder {
+  color: hsl(var(--neutral-300));
+}
 .weather__hero {
   display: grid;
   gap: 2rem;
-  max-width: 90%;
+  width: 100%;
   justify-content: center;
   align-content: center;
   background-image: url(assets/images/bg-today-small.svg);
   background-repeat: no-repeat;
-  background-size: 100%;
-  width: 350px;
-  height: 300px;
+  background-size: contain;
+  height: 325px;
 }
 .weather__hero-temp {
   display: flex;
@@ -138,13 +172,10 @@ div[aria-selected="true"]:after {
 .weather__dropdown-headings {
   color: hsl(var(--neutral-200));
 }
-.search-button {
-  margin-bottom: 2rem;
-}
 
 /* Current Weather */
 .weather__current {
-  max-width: 90%;
+  width: 100%;
   display: grid;
   gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
