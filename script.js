@@ -12,6 +12,9 @@ const switchMetric = document.getElementById("switchMetric");
 const humidity = document.getElementById("humidity");
 const wind = document.getElementById("wind");
 const precip = document.getElementById("precipitation");
+const weatherIconContainer = document.getElementById("weather-icon");
+const weatherIcon = weatherIconContainer.querySelector("img");
+
 const now = new Date();
 const options = {
   weekday: "long",
@@ -37,12 +40,14 @@ async function getGeoData() {
 
   url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
   let y = await fetchResult(url);
+  console.log(y);
   let feelsLike = y.current.apparent_temperature;
   let currentTemp = y.current.temperature_2m;
   let relHumidity = y.current.relative_humidity_2m;
   let curWind = y.current.wind_speed_10m;
   let curPrecip = y.current.precipitation;
-  // console.log(y);
+  console.log(getWeatherFileName(y.current.weather_code));
+  weatherIcon.src = getWeatherFileName(y.current.weather_code);
   feelLike.innerHTML = `${feelsLike}c`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
   humidity.innerHTML = `${relHumidity}%`;
@@ -88,4 +93,47 @@ function checkUnitState() {
     switchMetric.classList.remove("hidden");
     switchImperial.classList.add("hidden");
   }
+}
+
+function getWeatherFileName(code) {
+  // 0 - sunny
+  // 1,2 -- party-cloudy
+  // 3 -- overcast
+  // 45, 48 -- fog
+  // 51, 53, 55, 56, 57 -- drizzle
+  // 61, 63, 65, 66, 67, 80, 82 -- rain
+  let x = "";
+  switch (code) {
+    case 0:
+      x = "sunny";
+      break;
+    case 1:
+    case 2:
+      x = "partly-cloudy";
+      break;
+    case 3:
+      x = "overcast";
+      break;
+    case 45:
+    case 48:
+      x = "fog";
+      break;
+    case 51:
+    case 53:
+    case 55:
+    case 56:
+    case 57:
+      x = "drizzle";
+      break;
+    case 61:
+    case 63:
+    case 65:
+    case 66:
+    case 67:
+    case 80:
+    case 82:
+      x = "rain";
+      break;
+  }
+  return `assets/images/icon-${x}.webp`;
 }
