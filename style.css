@@ -199,7 +199,39 @@ div[aria-selected="true"]:after {
   padding: 0.5rem 0.5rem;
   border-radius: 0.4rem;
 }
+.weather__daily-forecast {
+  width: 100%;
+}
+.weather__daily-forecast-list {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.weather__daily-forecast-item {
+  display: grid;
+  gap: 0.5rem;
+  align-content: space-around;
+  justify-items: center;
+  padding: 1rem;
+  background-color: hsl(var(--neutral-600));
+  border-radius: 0.5rem;
+}
+.weather__daily-forecast-item img {
+  width: 50px;
+}
+.weather__daily-forecast-temps {
+  display: flex;
+  gap: 1rem;
+}
 
+/*  attribution */
+.attribution {
+  font-size: 11px;
+  text-align: center;
+}
+.attribution a {
+  color: hsl(228, 14%, 86%);
+}
 .hidden {
   display: none;
 }

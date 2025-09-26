@@ -23,6 +23,7 @@ const options = {
   day: "numeric",
 };
 const formatedDate = now.toLocaleDateString("en-US", options);
+const dailyList = document.getElementById("daily-forecast-list");
 let unitState = "metric";
 
 checkUnitState();
@@ -40,19 +41,18 @@ async function getGeoData() {
 
   url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,showers&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
   let y = await fetchResult(url);
-  console.log(y);
   let feelsLike = y.current.apparent_temperature;
   let currentTemp = y.current.temperature_2m;
   let relHumidity = y.current.relative_humidity_2m;
   let curWind = y.current.wind_speed_10m;
   let curPrecip = y.current.precipitation;
-  console.log(getWeatherFileName(y.current.weather_code));
   weatherIcon.src = getWeatherFileName(y.current.weather_code);
   feelLike.innerHTML = `${feelsLike}c`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
   humidity.innerHTML = `${relHumidity}%`;
   wind.innerHTML = `${curWind} km/h`;
   precip.innerHTML = `${curPrecip} mm`;
+  displayDailyInfo(y.daily);
 }
 
 async function fetchResult(url) {
@@ -96,12 +96,6 @@ function checkUnitState() {
 }
 
 function getWeatherFileName(code) {
-  // 0 - sunny
-  // 1,2 -- party-cloudy
-  // 3 -- overcast
-  // 45, 48 -- fog
-  // 51, 53, 55, 56, 57 -- drizzle
-  // 61, 63, 65, 66, 67, 80, 82 -- rain
   let x = "";
   switch (code) {
     case 0:
@@ -136,4 +130,40 @@ function getWeatherFileName(code) {
       break;
   }
   return `assets/images/icon-${x}.webp`;
+}
+
+function displayDailyInfo(dailyInfo) {
+  console.log(dailyInfo);
+  let tempMax = dailyInfo.temperature_2m_max;
+  let tempMin = dailyInfo.temperature_2m_min;
+  let weatherCodes = dailyInfo.weather_code;
+
+  let dayShort = "";
+  let weatherFileCode = null;
+  // console.log(tempMin);
+  // now.setDate(now.getDate() + 1);
+  const options = { weekday: "short" };
+  // console.log(now.toLocaleDateString('en-US', options));
+  // for (let i = 0; i < 7; i++) {
+
+  //   // Code to be executed seven times
+  //   console.log("This will run for the " + (i + 1) + " time.");
+  // }
+  dailyList.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    dayShort = now.toLocaleDateString("en-US", options);
+    weatherFile = getWeatherFileName(weatherCodes[i]);
+    console.log(weatherFile);
+    dailyList.innerHTML += `
+    <div class="weather__daily-forecast-item">
+    <h3 class="weather__daily-forecast-day">${dayShort}</h3>
+    <img src="${weatherFile}" alt="overcast icon">
+    <div class="weather__daily-forecast-temps">
+    <div class="weather__daily-forecast-temp-max">${tempMax[i]}&#176;</div>
+    <div class="weather__daily-forecast-temp-min">${tempMin[i]}&#176;</div>
+    </div>
+    </div>
+    `;
+    now.setDate(now.getDate() + 1);
+  }
 }

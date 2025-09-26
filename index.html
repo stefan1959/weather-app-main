@@ -13,27 +13,11 @@
     />
 
     <title>Frontend Mentor | Weather app</title>
-
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css" />
-    <style>
-      .attribution {
-        font-size: 11px;
-        text-align: center;
-      }
-      .attribution a {
-        color: hsl(228, 14%, 86%);
-      }
-    </style>
+    
   </head>
   <body>
-    <!-- <input type="text" id="city-input" placeholder="Enter city name" />
-    <button id="search-button">Search</button>
-
-    <div id="LocateCity">Location is</div>
-   
-
-    <div id="temp">Current Temp is</div> -->
-
     <main class="container">
       <div class="weather__top-bar">
         <img src="/assets/images/logo.svg" alt="logo" />
@@ -94,10 +78,74 @@
           <div id="precipitation">-</div>
         </div>
       </div>
-      Daily forecast
-      <!-- Insert daily forecast for the next 7 days here -->
-      Hourly forecast
-      <!-- Insert hourly forecast for the selected day here -->
+      <div class="weather__daily-forecast">
+        <h2 class="weather__daily-forecast-heading">Daily forecast</h2>
+        <div id="daily-forecast-list" class="weather__daily-forecast-list">
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">mon</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">tue</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">wed</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">thur</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">fri</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">sat</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <div class="weather__daily-forecast-item">
+            <h3 class="weather__daily-forecast-day">sun</h3>
+            <img src="/assets/images/icon-overcast.webp" alt="overcast icon">
+            <div class="weather__daily-forecast-temps">
+              <div class="weather__daily-forecast-temp-max">-&#176;</div>
+              <div class="weather__daily-forecast-temp-min">-&#176;</div>
+            </div>
+          </div>
+          <!-- Insert daily forecast for the next 7 days here -->
+        </div>
+        <div class="weather__hourly-forecast">
+          <h2 class="weather__hourly-forecast-heading">Hourly forecast</h2>
+          <div class="weather__hourly-forecast-list">
+          <div class="weather__hourly-forecast-item"></div>
+          
+        <!-- Insert hourly forecast for the selected day here -->
+      </div>
     </main>
 
     <div class="attribution">
