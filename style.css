@@ -223,6 +223,26 @@ div[aria-selected="true"]:after {
   display: flex;
   gap: 1rem;
 }
+.weather__hourly-forecast-list {
+  display: grid;
+  gap: 1rem;
+}
+.weather__hourly-forecast-item {
+  background-color: hsl(var(--neutral-600));
+  display: flex;
+  align-items: center;
+  padding-inline: 1rem;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+}
+.weather__hourly-forecast-time {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.weather__hourly-forecast-item img {
+  width: 50px;
+}
 
 /*  attribution */
 .attribution {
