@@ -17,6 +17,7 @@ const weatherIcon = weatherIconContainer.querySelector("img");
 const hourlyForcast = document.getElementById("hourly-forecast");
 
 const now = new Date();
+// now.setHours(25);
 const options = {
   weekday: "long",
   year: "numeric",
@@ -187,6 +188,7 @@ function displayHourlyInfo(theHour) {
     firstMatch = i;
   } while (!timeOfDay[i].includes(currentHour + ":00"));
   i++;
+  console.log(i);
   let weatherCodes = theHour.weather_code;
   for ( let z= 0; z <= 7; z++ ) {
   html += `
@@ -214,6 +216,10 @@ function hourDisplay(h) {
     return "12PM";
   } else if (h >= 13 && h <= 23) {
     return h - 12 + "PM";
+  } else if (h === 24) {
+    return "12AM";
+  } else if (h >= 25 ) {
+    return h - 24 + "AM";
   } else {
     return "Invalid hour"; // Handle cases outside of 0-23
   }
