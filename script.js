@@ -81,6 +81,11 @@ searchCity.addEventListener("click", (e) => {
   //get the location data
   getGeoData();
 });
+enterCity.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    getGeoData();
+  }
+});
 
 units.addEventListener("click", () => {
   if (dropdownContent.classList.contains("hidden")) {
@@ -179,7 +184,7 @@ function displayHourlyInfo(theHour) {
   let timeOfDay = theHour.time;
   let tempForHour = theHour.temperature_2m;
   let currentHour = now.getHours();
-  
+
   let html = "";
   hourlyForcast.html = "";
   let i = -1;
@@ -190,19 +195,21 @@ function displayHourlyInfo(theHour) {
   i++;
   console.log(i);
   let weatherCodes = theHour.weather_code;
-  for ( let z= 0; z <= 7; z++ ) {
-  html += `
+  for (let z = 0; z <= 7; z++) {
+    html += `
    <div class="weather__hourly-forecast-item">
             <div class="weather__hourly-forecast-time">
-              <img src="${getWeatherFileName(weatherCodes[i])}" alt="Icon for Hourly">
+              <img src="${getWeatherFileName(
+                weatherCodes[i]
+              )}" alt="Icon for Hourly">
               <div>${hourDisplay(i)}</div>
             </div>
             <div>${tempForHour[i]}&#176;</div>
           </div>
   
   `;
-  i++;
-}
+    i++;
+  }
   hourlyForcast.innerHTML = html;
   // console.log(matchingIndexes);
 }
@@ -218,7 +225,7 @@ function hourDisplay(h) {
     return h - 12 + "PM";
   } else if (h === 24) {
     return "12AM";
-  } else if (h >= 25 ) {
+  } else if (h >= 25) {
     return h - 24 + "AM";
   } else {
     return "Invalid hour"; // Handle cases outside of 0-23
