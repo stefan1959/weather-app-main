@@ -231,3 +231,25 @@ function hourDisplay(h) {
     return "Invalid hour"; // Handle cases outside of 0-23
   }
 }
+
+function initAutocomplete() {
+  // const input = document.getElementById("city-input");
+  const autocomplete = new google.maps.places.Autocomplete(enterCity, {
+    types: ["(cities)"], // Optional: restrict to cities
+    fields: ["geometry", "name"], // Optional: limit returned data
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+      console.log("No details available for input: '" + place.name + "'");
+      return;
+    }
+
+    console.log("Selected place:", place.name);
+    console.log("Latitude:", place.geometry.location.lat());
+    console.log("Longitude:", place.geometry.location.lng());
+  });
+}
+
+window.addEventListener("load", initAutocomplete);
