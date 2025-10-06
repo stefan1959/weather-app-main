@@ -236,7 +236,7 @@ function initAutocomplete() {
   // const input = document.getElementById("city-input");
   const autocomplete = new google.maps.places.Autocomplete(enterCity, {
     types: ["(cities)"], // Optional: restrict to cities
-    fields: ["geometry", "name"], // Optional: limit returned data
+    fields: ["geometry", "name", "address_components"], // Optional: limit returned data
   });
 
   autocomplete.addListener("place_changed", () => {
@@ -246,9 +246,31 @@ function initAutocomplete() {
       return;
     }
 
-    console.log("Selected place:", place.name);
-    console.log("Latitude:", place.geometry.location.lat());
-    console.log("Longitude:", place.geometry.location.lng());
+    let country = "";
+    let state = "";
+
+    if (place.address_components) {
+      for (const component of place.address_components) {
+        if (component.types.includes("country")) {
+          country = component.long_name;
+        }
+        if (
+          component.types.includes("administrative_area_level_1") ||
+          component.types.includes("locality")
+        ) {
+          state = component.long_name;
+        }
+      }
+    }
+
+    // console.log("Latitude:", place.geometry.location.lat());
+    // console.log("Longitude:", place.geometry.location.lng());
+    // let city = place.name;
+    // let lat = place.geometry.location.lat();
+    // let lon = place.geometry.location.lng();
+    // console.log(city, lat, lon);
+    enterCity.value = place.name + ", " + state + " " + country;
+    getGeoData();
   });
 }
 
