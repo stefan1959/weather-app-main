@@ -8,6 +8,8 @@ const units = document.getElementById("units");
 const dropdownContent = document.getElementById("dropdown-content");
 const feelLike = document.getElementById("feels-like");
 const switchImperial = document.getElementById("switchImperial");
+const showMetric = document.getElementById("metricSelected");
+const showImperial = document.getElementById("imperialSelected");
 const switchMetric = document.getElementById("switchMetric");
 const humidity = document.getElementById("humidity");
 const wind = document.getElementById("wind");
@@ -15,6 +17,10 @@ const precip = document.getElementById("precipitation");
 const weatherIconContainer = document.getElementById("weather-icon");
 const weatherIcon = weatherIconContainer.querySelector("img");
 const hourlyForcast = document.getElementById("hourly-forecast");
+let tempUnits = "";
+let windUnits = "";
+let precipUnits = "";
+let unitState = "metric";
 
 const now = new Date();
 // now.setHours(25);
@@ -26,7 +32,6 @@ const options = {
 };
 const formatedDate = now.toLocaleDateString("en-US", options);
 const dailyList = document.getElementById("daily-forecast-list");
-let unitState = "metric";
 
 checkUnitState();
 
@@ -41,7 +46,7 @@ async function getGeoData() {
   weatherloc.innerHTML = `${city}, ${state} <br> ${country}`;
   weatherDate.innerHTML = formatedDate;
 
-  url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=Australia%2FSydney`;
+  url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=auto&temperature_unit=${tempUnits}&wind_speed_unit=${windUnits}&precipitation_unit=${precipUnits}`;
   let y = await fetchResult(url);
   // console.log(y);
   let feelsLike = y.current.apparent_temperature;
@@ -51,11 +56,11 @@ async function getGeoData() {
   let curPrecip = y.current.precipitation;
   let fileSrc = getWeatherFileName(y.current.weather_code);
   weatherIcon.src = fileSrc;
-  feelLike.innerHTML = `${feelsLike}c`;
+  feelLike.innerHTML = `${feelsLike}&#176`;
   weathertemp.innerHTML = `${currentTemp}&#176;`;
   humidity.innerHTML = `${relHumidity}%`;
-  wind.innerHTML = `${curWind} km/h`;
-  precip.innerHTML = `${curPrecip} mm`;
+  wind.innerHTML = `${curWind} ${windUnits}`;
+  precip.innerHTML = `${curPrecip} ${precipUnits}`;
   displayDailyInfo(y.daily);
   displayHourlyInfo(y.hourly);
 }
@@ -99,9 +104,19 @@ function checkUnitState() {
   if (unitState == "metric") {
     switchMetric.classList.add("hidden");
     switchImperial.classList.remove("hidden");
+    showMetric.classList.remove("hidden");
+    showImperial.classList.add("hidden");
+    tempUnits = "celsius";
+    windUnits = "kmh";
+    precipUnits = "mm";
   } else {
     switchMetric.classList.remove("hidden");
     switchImperial.classList.add("hidden");
+    showMetric.classList.add("hidden");
+    showImperial.classList.remove("hidden");
+    tempUnits = "fahrenheit";
+    windUnits = "mph";
+    precipUnits = "inch";
   }
 }
 
@@ -270,8 +285,22 @@ function initAutocomplete() {
     // let lon = place.geometry.location.lng();
     // console.log(city, lat, lon);
     enterCity.value = place.name + ", " + state + " " + country;
+    console.log(unitState);
     getGeoData();
   });
 }
 
-window.addEventListener("load", initAutocomplete);
+enterCity.addEventListener("focus", initAutocomplete);
+
+switchImperial.addEventListener("click", () => {
+  unitState = "imperial";
+  dropdownContent.classList.add("hidden");
+  checkUnitState();
+  getGeoData();
+});
+switchMetric.addEventListener("click", () => {
+  unitState = "metric";
+  dropdownContent.classList.add("hidden");
+  checkUnitState();
+  getGeoData();
+});

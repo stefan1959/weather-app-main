@@ -63,7 +63,9 @@ body {
 .weather__top-bar {
   display: flex;
   align-items: center;
+  padding-block: 1rem;
   justify-content: space-between;
+  width: 100%;
   @media (width > 600px) {
     grid-column: 1/-1;
   }
@@ -157,19 +159,25 @@ body {
 .weather-temp {
   font-size: 4rem;
 }
+.weather__dropdown {
+  position: relative;
+}
 
 .weather__dropdown-button {
   display: flex;
   position: relative;
   color: hsl(var(--neutral-0));
+  border: 0;
+  align-items: center;
   background-color: hsl(var(--neutral-600));
-  padding: 0.1rem 1.6rem;
+  padding: 0.1rem 1.9rem;
   margin-right: 2rem;
+  border-radius: 0.5rem;
 }
 .weather__dropdown-button::before {
   position: absolute;
   content: "";
-  left: 4px;
+  left: 6px;
   width: 16px;
   height: 16px;
   background-image: url(assets/images/icon-units.svg);
@@ -179,8 +187,8 @@ body {
 .weather__dropdown-button::after {
   position: absolute;
   content: "";
-  top: 5px;
-  right: 4px;
+  top: 10px;
+  right: 5px;
   width: 16px;
   height: 16px;
   background-image: url(assets/images/icon-dropdown.svg);
@@ -189,7 +197,7 @@ body {
 }
 .weather__dropdown-content {
   position: absolute;
-  right: 0;
+  right: 2rem;
   display: grid;
   gap: 0.2rem;
   background-color: hsl(var(--neutral-700));
@@ -197,11 +205,19 @@ body {
   margin-top: 0.5rem;
   min-width: 200px;
 }
-.switchImperial {
+.switchImperial,
+.switchMetric {
   color: hsl(var(--neutral-0));
   background-color: hsl(var(--neutral-700));
   text-align: left;
+  padding-inline-start: 0.5rem;
   border: 0;
+}
+.switchImperial:hover,
+.switchMetric:hover {
+  cursor: pointer;
+  outline: 1px solid;
+  border-radius: 0.5rem;
 }
 div[aria-selected="true"] {
   /*  */

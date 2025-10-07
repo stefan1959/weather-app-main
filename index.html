@@ -30,15 +30,28 @@
             <button id="switchMetric" class="switchMetric" value="metric">
               Switch to Metric
             </button>
-            <div class="weather__dropdown-headings">Temperature</div>
-            <div aria-selected="true">Celsius (°C)</div>
-            <div aria-selected="false">Fahrenheit (°F)</div>
-            <div class="weather__dropdown-headings">Wind Speed</div>
-            <div aria-selected="true">km/h</div>
-            <div aria-selected="false">mph</div>
-            <div class="weather__dropdown-headings">Precipitation</div>
-            <div aria-selected="true">Millimeters (mm)</div>
-            <div aria-selected="false">Inches (in)</div>
+            <div id="metricSelected">
+              <div class="weather__dropdown-headings">Temperature</div>
+              <div aria-selected="true">Celsius (°C)</div>
+              <div aria-selected="false">Fahrenheit (°F)</div>
+              <div class="weather__dropdown-headings">Wind Speed</div>
+              <div aria-selected="true">km/h</div>
+              <div aria-selected="false">mph</div>
+              <div class="weather__dropdown-headings">Precipitation</div>
+              <div aria-selected="true">Millimeters (mm)</div>
+              <div aria-selected="false">Inches (in)</div>
+            </div>
+            <div id="imperialSelected" class="hidden">
+              <div class="weather__dropdown-headings">Temperature</div>
+              <div aria-selected="false">Celsius (°C)</div>
+              <div aria-selected="true">Fahrenheit (°F)</div>
+              <div class="weather__dropdown-headings">Wind Speed</div>
+              <div aria-selected="false">km/h</div>
+              <div aria-selected="true">mph</div>
+              <div class="weather__dropdown-headings">Precipitation</div>
+              <div aria-selected="false">Millimeters (mm)</div>
+              <div aria-selected="true">Inches (in)</div>
+            </div>
           </div>
         </div>
       </div>
