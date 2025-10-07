@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const enterCity = document.getElementById("city-input");
 const searchCity = document.getElementById("search-button");
 // const locCity = document.getElementById("LocateCity");
