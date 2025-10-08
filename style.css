@@ -48,6 +48,7 @@ body {
   background-color: hsl(var(--neutral-900));
 }
 .container {
+  outline: 3px sol;
   display: grid;
   gap: 1rem;
   padding-inline: 1rem;
@@ -266,8 +267,11 @@ div[aria-selected="true"]:after {
     grid-column: 1/3;
   }
 }
+.weather__daily-forecast-heading {
+  font-size: 1.2rem;
+}
 .weather__daily-forecast h3 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 300;
   text-transform: capitalize;
 }
@@ -286,7 +290,7 @@ div[aria-selected="true"]:after {
   gap: 0.5rem;
   align-content: space-around;
   justify-items: center;
-  padding: 0.5rem;
+  padding-block: 0.5rem;
   background-color: hsl(var(--neutral-600));
   border-radius: 0.5rem;
 }
