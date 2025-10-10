@@ -17,10 +17,13 @@ const precip = document.getElementById("precipitation");
 const weatherIconContainer = document.getElementById("weather-icon");
 const weatherIcon = weatherIconContainer.querySelector("img");
 const hourlyForcast = document.getElementById("hourly-forecast");
+const dayForcast = document.getElementById("dayForcast");
 let tempUnits = "";
 let windUnits = "";
 let precipUnits = "";
 let unitState = "metric";
+let hourlyDay = 0;
+let newSearch = true;
 
 const now = new Date();
 // now.setHours(25);
@@ -32,6 +35,12 @@ const options = {
 };
 const formatedDate = now.toLocaleDateString("en-US", options);
 const dailyList = document.getElementById("daily-forecast-list");
+document.addEventListener("DOMContentLoaded", () => {
+  //make global
+  today = new Date().getDay();
+  // document.getElementById("dayForcast").value = today.toString();
+  displayDropDown(today);
+});
 
 checkUnitState();
 
@@ -48,7 +57,6 @@ async function getGeoData() {
 
   url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=auto&temperature_unit=${tempUnits}&wind_speed_unit=${windUnits}&precipitation_unit=${precipUnits}`;
   let y = await fetchResult(url);
-  // console.log(y);
   let feelsLike = y.current.apparent_temperature;
   let currentTemp = y.current.temperature_2m;
   let relHumidity = y.current.relative_humidity_2m;
@@ -84,12 +92,22 @@ async function fetchResult(url) {
 // listen for click on search button
 searchCity.addEventListener("click", (e) => {
   //get the location data
+  hourlyDay = 0;
+  dayForcast.selectedIndex = 0;
   getGeoData();
+  newSearch = false;
 });
 enterCity.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
+    hourlyDay = 0;
+    dayForcast.selectedIndex = 0;
     getGeoData();
+    newSearch = false;
   }
+});
+enterCity.addEventListener("click", () => {
+  enterCity.value = "";
+  newSearch = true;
 });
 
 units.addEventListener("click", () => {
@@ -164,12 +182,6 @@ function displayDailyInfo(dailyInfo) {
 
   // now.setDate(now.getDate() + 1);
   const options = { weekday: "short" };
-  // console.log(now.toLocaleDateString('en-US', options));
-  // for (let i = 0; i < 7; i++) {
-
-  //   // Code to be executed seven times
-  //   console.log("This will run for the " + (i + 1) + " time.");
-  // }
 
   let html = "";
   const date = new Date(now);
@@ -200,6 +212,8 @@ function displayHourlyInfo(theHour) {
   let tempForHour = theHour.temperature_2m;
   let currentHour = now.getHours();
 
+  // console.log (timeOfDay);
+
   let html = "";
   hourlyForcast.html = "";
   let i = -1;
@@ -208,22 +222,23 @@ function displayHourlyInfo(theHour) {
     firstMatch = i;
   } while (!timeOfDay[i].includes(currentHour + ":00"));
   i++;
-  console.log(i);
+  x = i + hourlyDay;
   let weatherCodes = theHour.weather_code;
   for (let z = 0; z <= 7; z++) {
     html += `
    <div class="weather__hourly-forecast-item">
             <div class="weather__hourly-forecast-time">
               <img src="${getWeatherFileName(
-                weatherCodes[i]
+                weatherCodes[x]
               )}" alt="Icon for Hourly">
               <div>${hourDisplay(i)}</div>
             </div>
-            <div>${tempForHour[i]}&#176;</div>
+            <div>${tempForHour[x]}&#176;</div>
           </div>
   
   `;
     i++;
+    x++;
   }
   hourlyForcast.innerHTML = html;
   // console.log(matchingIndexes);
@@ -248,7 +263,6 @@ function hourDisplay(h) {
 }
 
 function initAutocomplete() {
-  // const input = document.getElementById("city-input");
   const autocomplete = new google.maps.places.Autocomplete(enterCity, {
     types: ["(cities)"], // Optional: restrict to cities
     fields: ["geometry", "name", "address_components"], // Optional: limit returned data
@@ -277,15 +291,9 @@ function initAutocomplete() {
         }
       }
     }
-
-    // console.log("Latitude:", place.geometry.location.lat());
-    // console.log("Longitude:", place.geometry.location.lng());
-    // let city = place.name;
-    // let lat = place.geometry.location.lat();
-    // let lon = place.geometry.location.lng();
-    // console.log(city, lat, lon);
     enterCity.value = place.name + ", " + state + " " + country;
-    console.log(unitState);
+    hourlyDay = 0;
+    dayForcast.selectedIndex = 0;
     getGeoData();
   });
 }
@@ -304,3 +312,56 @@ switchMetric.addEventListener("click", () => {
   checkUnitState();
   getGeoData();
 });
+
+function displayDropDown(today) {
+  let i = today;
+  dayForcast.innerHTML = "";
+  for (let x = i; x < i + 7; x++) {
+    const newOption = document.createElement("option");
+    newOption.value = (x - i) * 24;
+    newOption.textContent = getTheDay(x);
+    dayForcast.appendChild(newOption);
+  }
+}
+dayForcast.addEventListener("change", (e) => {
+  hourlyDay = Number(e.target.value);
+
+  if (weathertemp.innerHTML != "--") {
+    getGeoData();
+  }
+});
+
+function getTheDay(i) {
+  let day = "";
+  switch (i) {
+    case 0:
+    case 7:
+      day = "Sunday";
+      break;
+    case 1:
+    case 8:
+      day = "Monday";
+      break;
+    case 2:
+    case 9:
+      day = "Tuesday";
+      break;
+    case 3:
+    case 10:
+      day = "Wednesday";
+      break;
+    case 4:
+    case 11:
+      day = "Thursday";
+      break;
+    case 5:
+    case 12:
+      day = "Friday";
+      break;
+    case 6:
+    case 13:
+      day = "Saturday";
+      break;
+  }
+  return day;
+}
